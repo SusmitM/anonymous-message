@@ -4,7 +4,7 @@ import UserModel from "@/model/User";
 import bcrypt from "bcryptjs";
 import { NextRequest } from "next/server";
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest):Promise<Response> {
   await dbConnect();
 
   try {
