@@ -26,8 +26,8 @@ export const GET = async (request: NextRequest, respose: NextResponse) => {
     const {username}=result.data;
 
     const existingVerifiedUser=await UserModel.findOne({username,isVerified:true});
+    
     if(existingVerifiedUser){
-
         return Response.json({success:false,message:"Username already taken "},{status:400})
     }
     return Response.json({success:true,message:"Username is available "},{status:200})
