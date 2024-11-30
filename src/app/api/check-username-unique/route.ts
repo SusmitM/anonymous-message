@@ -16,12 +16,16 @@ export const GET = async (request: NextRequest, respose: NextResponse) => {
       username: searchParams.get("username"),
     };
     const result=UsernameQuerySchema.safeParse(queryParam);
-    console.log("🚀 ~ GET ~ result:", result)
+    console.log("🚀 ~ GET ~ result:", result?.error?.format().username?._errors)
+   
 
     if(!result.success){
         const usernameErrors=result.error.format().username?._errors || []
 
-        return Response.json({success:false,message:"Invalid query parameters"},{status:400})
+        return Response.json({success:false, message:
+          usernameErrors?.length > 0
+            ? usernameErrors.join(', ')
+            : 'Invalid query parameters',},{status:400})
     }
     const {username}=result.data;
 
