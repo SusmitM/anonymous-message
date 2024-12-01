@@ -7,7 +7,8 @@ export const POST=async(request:Request)=>{
 
     const {username,content}=await request.json();
     try{
-        const user:any =UserModel.findOne({username}) ;
+        const user:any =await UserModel.findOne({username}) ;
+      
         if(!user){
             return Response.json({
                 success:false,
@@ -15,8 +16,8 @@ export const POST=async(request:Request)=>{
             },
         {status:404})
         }
-
-        if (!user?.isAcceptingMessage) {
+     
+        if (!user.isAcceptingMessage) {
 
             return Response.json({
                 success:false,

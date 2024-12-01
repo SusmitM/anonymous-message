@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
     // Ensure the response has `generated_text`
     const text = response.generated_text || '';
-    console.log("🚀 ~ POST ~ text:", text)
+  
 
     // Strip the prompt if it appears at the beginning
     const cleanText = text.startsWith(prompt) ? text.slice(prompt.length).trim() : text;

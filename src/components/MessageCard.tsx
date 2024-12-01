@@ -44,7 +44,7 @@ onMessageDelete(message?._id as string)
     <div>
       <Card>
   <CardHeader>
-    <CardTitle>Card Title</CardTitle>
+    <CardTitle>{message.content}</CardTitle>
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="destructive"><X className="w-r h-5"/></Button>
@@ -53,8 +53,7 @@ onMessageDelete(message?._id as string)
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            This action cannot be undone. This will permanently delete this message.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -63,14 +62,14 @@ onMessageDelete(message?._id as string)
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-    <CardDescription>Card Description</CardDescription>
+    {/* <CardDescription>Card Description</CardDescription> */}
   </CardHeader>
-  <CardContent>
+  {/* <CardContent>
     <p>Card Content</p>
-  </CardContent>
-  <CardFooter>
+  </CardContent> */}
+  {/* <CardFooter>
     <p>Card Footer</p>
-  </CardFooter>
+  </CardFooter> */}
 </Card>
 
     </div>

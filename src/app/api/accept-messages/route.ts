@@ -7,7 +7,7 @@ import UserModel from "@/model/User";
 export const POST = async (request: NextRequest) => {
   await dbConnect();
   const session = await getServerSession(authOptions);
-  //console.log("🚀 ~ GET ~ session: From accept", session)
+ 
   const user = session?.user as User;
   if (!session || !session.user) {
     return Response.json(
@@ -20,6 +20,7 @@ export const POST = async (request: NextRequest) => {
   }
   const userId = user._id;
   const { acceptMessages } = await request.json();
+  console.log("🚀 ~ POST ~ acceptMessages:", acceptMessages)
 
   try {
     const updatedUser = await UserModel.findByIdAndUpdate(
@@ -73,7 +74,8 @@ export const GET=async(request:Request)=>{
   }
   const userId = user._id;
   try{
-    const foundUser = await UserModel.findById(userId) as User;
+    const foundUser:any = await UserModel.findById(userId);
+  
     if(!foundUser) {
         // User not found
         return Response.json(
@@ -81,12 +83,13 @@ export const GET=async(request:Request)=>{
           { status: 404 }
         );
       }
-  
+      
       // Return the user's message acceptance status
       return Response.json(
         {
           success: true,
-          isAcceptingMessages: foundUser.isAcceptingMessages
+          message:"Status fetched",
+          isAcceptingMessages: foundUser?.isAcceptingMessage
         },
         { status: 200 }
       );

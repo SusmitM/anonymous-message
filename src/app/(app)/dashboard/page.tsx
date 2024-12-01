@@ -6,7 +6,7 @@ import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
 import { Message } from '@/model/User'
-import { acceptMessageScheam } from '@/schemas/acceptMessageSchema';
+import { acceptmessageSchema } from '@/schemas/acceptMessageSchema';
 import { ApiResponse } from '@/types/ApiResponse';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios, { AxiosError } from 'axios';
@@ -32,7 +32,7 @@ const page = () => {
 
   const form=useForm(
     {
-      resolver:zodResolver(acceptMessageScheam)
+      resolver:zodResolver(acceptmessageSchema)
      
     }
   )
@@ -46,6 +46,7 @@ const page = () => {
     try {
       const response=await axios.get<ApiResponse>( `/api/accept-messages`);
 
+      console.log("🚀 ~ fetchAcceptMessage ~ response:", response)
       setValue('acceptMessages',response.data.isAcceptingMessages);
     } catch (error) {
       const axiosError=error as AxiosError<ApiResponse>;
@@ -100,7 +101,7 @@ const page = () => {
     try {
       
      const response= await axios.post<ApiResponse>(`/api/accept-messages`,{
-        acceptMessage:!acceptMessages
+      acceptMessages:!acceptMessages
       })
 
       setValue('acceptMessages',!acceptMessages);

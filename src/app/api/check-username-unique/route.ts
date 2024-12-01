@@ -16,7 +16,7 @@ export const GET = async (request: NextRequest, respose: NextResponse) => {
       username: searchParams.get("username"),
     };
     const result=UsernameQuerySchema.safeParse(queryParam);
-    console.log("🚀 ~ GET ~ result:", result?.error?.format().username?._errors)
+   
    
 
     if(!result.success){

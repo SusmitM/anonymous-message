@@ -15,13 +15,13 @@ export const GET= async(request:Request)=>{
    if(!session || !_user){
     return Response.json({success:false,message:"Not Authenticated"},{status:401})
    }
-   console.log("🚀 ~ GET ~ session:", session);
+
 
    const userId=new mongoose.Types.ObjectId(_user._id); 
-   console.log("🚀 ~ GET ~ userId:", userId)
+
 
    const user = await UserModel.findOne({_id: userId});
-   console.log("🚀 ~ GET ~ user document:", user);
+   
 
    if (!user) {
        return Response.json({
@@ -30,7 +30,7 @@ export const GET= async(request:Request)=>{
        }, { status: 401 });
    }
 
-   console.log("🚀 ~ GET ~ user messages:", user.messages);
+
 
    if (user.messages.length === 0) {
        return Response.json({
@@ -45,7 +45,7 @@ export const GET= async(request:Request)=>{
        { $sort: { 'messages.createdAt': -1 } },
        { $group: { _id: '$_id', messages: { $push: '$messages' } } }
    ]);
-   console.log("🚀 ~ GET ~ messages:", messages);
+   
 
    try{
     const user=await UserModel.aggregate([
@@ -54,7 +54,7 @@ export const GET= async(request:Request)=>{
         {$sort:{'messages.createdAt':-1}},
         {$group:{_id:'$_id',messages:{$push:'$messages'}}}
     ])
-    console.log("🚀 ~ GET ~ user:", user)
+
    
     if (!user || user.length === 0) {
         return Response.json({
@@ -65,7 +65,8 @@ export const GET= async(request:Request)=>{
     }
     return Response.json({
         success:true,
-        message:user[0]?.messages
+        message:'Messages fetched successfully',
+        messages:user[0]?.messages
     },
 {status:200})
    }
