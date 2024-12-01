@@ -70,3 +70,21 @@ body {
     @apply bg-background text-foreground;
   }
 }
+/* Ensure the carousel buttons are styled properly */
+.carousel-button {
+  background: transparent; /* Make the background transparent */
+  border: none; /* Remove any borders */
+  cursor: pointer; /* Change cursor to pointer */
+}
+
+/* Make the arrow icons always visible */
+.arrow-icon {
+  opacity: 1 !important; /* Force the icon to be fully visible */
+  visibility: visible !important; /* Ensure visibility */
+  transition: opacity 0.3s ease; /* Optional: smooth transition */
+}
+
+/* Optional: Keep hover effects but ensure visibility */
+.carousel-button:hover .arrow-icon {
+  opacity: 1; /* Keep it visible on hover */
+}
