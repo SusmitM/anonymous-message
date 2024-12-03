@@ -16,15 +16,14 @@ import { ApiResponse } from "@/types/ApiResponse";
 import { useEffect, useState } from "react";
 
 export default function SignUp() {
-  const [loading, setLoading] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [username, setUsername] = useState("");
   const [usernameMessage, setUsernameMessage] = useState("");
-  const [usernameState, setUsernameState] = useState(false);
-
+  const[usernameState,setUsernameState]=useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const debounced = useDebounceCallback(setUsername, 500);
   const { toast } = useToast();
   const router = useRouter();
-  const debouncedUsername = useDebounceCallback(setUsername, 500);
 
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
@@ -37,28 +36,29 @@ export default function SignUp() {
 
   useEffect(() => {
     const checkUsernameUnique = async () => {
-      if (debouncedUsername) {
+      if (username) {
         setLoading(true);
-        setUsernameMessage(''); // Reset message
+        setUsernameMessage("");
         try {
-          const response = await axios.get<ApiResponse>(
-            `/api/check-username-unique?username=${debouncedUsername}`
+          const response = await axios.get(
+            `/api/check-username-unique?username=${username}`
           );
           setUsernameMessage(response.data.message);
-          setUsernameState(true)
+          setUsernameState(response.data.success)
         } catch (error) {
           const axiosError = error as AxiosError<ApiResponse>;
           setUsernameMessage(
-            axiosError.response?.data.message ?? 'Error checking username'
+            axiosError?.response?.data.message ?? "Error checking username"
           );
           setUsernameState(false)
+          
         } finally {
           setLoading(false);
         }
       }
     };
     checkUsernameUnique();
-  }, [debouncedUsername]);
+  }, [username]);
 
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
     setIsSubmitting(true);
@@ -109,7 +109,7 @@ export default function SignUp() {
                     className="bg-background/50"
                     onChange={(e) => {
                       field.onChange(e);
-                      debouncedUsername(e.target.value);
+                      debounced(e.target.value);
                     }}
                   />
                   {loading && <Loader2 className="animate-spin" />}
