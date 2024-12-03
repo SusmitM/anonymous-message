@@ -24,7 +24,7 @@ import { X } from 'lucide-react'
 import { Message } from '@/model/User'
 import { useToast } from '@/hooks/use-toast'
 import { ApiResponse } from '@/types/ApiResponse'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
   
 type MessageCardProps={
     message:Message;
@@ -32,12 +32,26 @@ type MessageCardProps={
 }
 const MessageCard = ({message,onMessageDelete}:MessageCardProps) => {
  const {toast}=useToast();
+
 const handleDeleteConfirm=async()=>{
-const response=await axios.delete<ApiResponse>(`/api/delete-message/${message?._id}`)
-toast({
-    title:response.data.message
-});
-onMessageDelete(message?._id as string)
+try {
+  const response=await axios.delete<ApiResponse>(`/api/delete-message`,{
+    data: { messageId: message?._id } 
+  })
+
+  toast({
+      title:response.data.message  });
+  onMessageDelete(message?._id as string)
+} catch (error) {
+  const axiosError=error as AxiosError<ApiResponse>;
+
+  console.error("Error occured while deleting message",error);
+  toast({
+    title:'Unable to delete message',
+    variant:"destructive"
+  })
+}
+
 }
 
     return (
@@ -62,14 +76,9 @@ onMessageDelete(message?._id as string)
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-    {/* <CardDescription>Card Description</CardDescription> */}
+
   </CardHeader>
-  {/* <CardContent>
-    <p>Card Content</p>
-  </CardContent> */}
-  {/* <CardFooter>
-    <p>Card Footer</p>
-  </CardFooter> */}
+ 
 </Card>
 
     </div>
