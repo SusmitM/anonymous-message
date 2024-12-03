@@ -59,7 +59,7 @@ export const POST = async (request: NextRequest) => {
 
 
 
-export const GET=async(request:Request)=>{
+export const GET=async()=>{
     await dbConnect()
     const session = await getServerSession(authOptions);
     const user = session?.user as User;

@@ -2,7 +2,6 @@ import dbConnect from "@/lib/dbConnect";
 import { getServerSession, User } from "next-auth";
 import { NextRequest } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/options";
-import mongoose from "mongoose";
 import UserModel from "@/model/User";
 
 export const DELETE = async (request: NextRequest) => {

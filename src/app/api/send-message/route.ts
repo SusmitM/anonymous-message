@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect"
 import UserModel, { Message } from "@/model/User";
-import { User } from "next-auth";
+
 
 export const POST=async(request:Request)=>{
     await dbConnect();

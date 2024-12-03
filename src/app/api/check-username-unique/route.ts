@@ -1,14 +1,14 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import { usernameValidation } from "@/schemas/signUpSchema";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { z } from "zod";
 
 const UsernameQuerySchema = z.object({
   username: usernameValidation,
 });
 
-export const GET = async (request: NextRequest, respose: NextResponse) => {
+export const GET = async (request: NextRequest) => {
   await dbConnect();
   try {
     const { searchParams } = new URL(request.url);

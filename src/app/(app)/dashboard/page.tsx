@@ -1,7 +1,6 @@
 "use client";
 import MessageCard from "@/components/MessageCard";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { Message } from "@/model/User";

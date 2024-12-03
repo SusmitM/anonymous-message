@@ -13,7 +13,7 @@ import { Loader2, MessageSquare } from "lucide-react";
 import { useDebounceCallback } from "usehooks-ts";
 import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function SignUp() {
   const [loading, setLoading] = useState(false);
@@ -24,7 +24,7 @@ export default function SignUp() {
 
   const { toast } = useToast();
   const router = useRouter();
-  const debounced = useDebounceCallback(setUsername, 500);
+  const debouncedUsername = useDebounceCallback(setUsername, 500);
 
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
@@ -34,6 +34,31 @@ export default function SignUp() {
       password: "",
     },
   });
+
+  useEffect(() => {
+    const checkUsernameUnique = async () => {
+      if (debouncedUsername) {
+        setLoading(true);
+        setUsernameMessage(''); // Reset message
+        try {
+          const response = await axios.get<ApiResponse>(
+            `/api/check-username-unique?username=${debouncedUsername}`
+          );
+          setUsernameMessage(response.data.message);
+          setUsernameState(true)
+        } catch (error) {
+          const axiosError = error as AxiosError<ApiResponse>;
+          setUsernameMessage(
+            axiosError.response?.data.message ?? 'Error checking username'
+          );
+          setUsernameState(false)
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    checkUsernameUnique();
+  }, [debouncedUsername]);
 
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
     setIsSubmitting(true);
@@ -84,7 +109,7 @@ export default function SignUp() {
                     className="bg-background/50"
                     onChange={(e) => {
                       field.onChange(e);
-                      debounced(e.target.value);
+                      debouncedUsername(e.target.value);
                     }}
                   />
                   {loading && <Loader2 className="animate-spin" />}
@@ -106,7 +131,7 @@ export default function SignUp() {
                   <FormLabel>Email</FormLabel>
                   <Input {...field} className="bg-background/50" />
                   <p className="text-sm text-muted-foreground">
-                    We'll send you a verification code
+                    We&apos;ll send you a verification code
                   </p>
                   <FormMessage />
                 </FormItem>
