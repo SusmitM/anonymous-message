@@ -1,42 +1,46 @@
 "use client";
 import { User } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
-import React from "react";
-import { Button } from "./ui/button";
 import Link from "next/link";
+import { Button } from "./ui/button";
+import { MessageSquare } from "lucide-react";
 
 const Navbar = () => {
   const { data: session } = useSession();
   const user = session?.user as User;
+
   return (
-    <nav className="p-4 md:p-6 shadow-md bg-gray-900 text-white">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-        <a href="#" className="text-xl font-bold mb-4 md:mb-0">
-          Anonymous Message
-        </a>
-        {session ? (
-          <>
-            {/* <span className="mr-4">
-              Welcome {user?.username || user?.email}
-            </span> */}
-            <Button
-              onClick={() => signOut()}
-              className="w-full md:w-auto bg-slate-100 text-black"
-              variant="outline"
-            >
-              Logout
-            </Button>
-          </>
-        ) : (
-          <Link href="/sign-in">
-            <Button
-              className="w-full md:w-auto bg-slate-100 text-black"
-              variant={"outline"}
-            >
-              Login
-            </Button>
+    <nav className="fixed top-0 left-0 right-0 z-50 nav-blur">
+      <div className="container mx-auto px-4">
+        <div className="h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-center space-x-2">
+            <MessageSquare className="h-6 w-6 text-blue-500" />
+            <span className="font-semibold text-lg">Anonymous Messages</span>
           </Link>
-        )}
+
+          <div className="flex items-center gap-4">
+            {session ? (
+              <>
+                <Link href="/dashboard">
+                  <Button variant="ghost">Dashboard</Button>
+                </Link>
+                <Button
+                  onClick={() => signOut()}
+                  variant="outline"
+                  className="border-blue-500/20 hover:bg-blue-500/10"
+                >
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <Link href="/sign-in">
+                <Button variant="outline" className="border-blue-500/20 hover:bg-blue-500/10">
+                  Sign In
+                </Button>
+              </Link>
+            )}
+          </div>
+        </div>
       </div>
     </nav>
   );
