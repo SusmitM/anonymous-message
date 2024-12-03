@@ -2,11 +2,18 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight, MessageSquare, Shield, UserRound } from "lucide-react";
+import { Spotlight } from "@/components/ui/Sportlight";
 
 export default function Home() {
   return (
-    <main className="min-h-screen hero-pattern">
-      <div className="container mx-auto px-4 py-24">
+    
+    <main className="min-h-screen hero-pattern relative overflow-hidden">
+      <Spotlight 
+        className="absolute sm:left-1/6 md:left-1/4 -translate-x-1/2 -top-40 sm:-top-44 md:-top-52 lg:-top-60"
+        fill="white"
+      />
+      <div className="container mt-32 mx-auto px-4 py-24 relative z-10">
+      
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <h1 className="text-4xl md:text-6xl font-bold gradient-text">
             Share Your Thoughts, Keep Your Privacy
