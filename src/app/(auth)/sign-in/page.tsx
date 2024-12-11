@@ -7,10 +7,18 @@ import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { signInSchema } from "@/schemas/signInSchema";
 import { useToast } from "@/hooks/use-toast";
-import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { MessageSquare } from "lucide-react";
+import Image from "next/image";
+import GoogleIcon from "../../../../public/GoogleIcon.svg";
 
 export default function SignIn() {
   const { toast } = useToast();
@@ -25,21 +33,21 @@ export default function SignIn() {
   });
 
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
-    const result = await signIn('credentials', {
+    const result = await signIn("credentials", {
       redirect: false,
       identifier: data.identifier,
-      password: data.password
+      password: data.password,
     });
 
     if (result?.error) {
       toast({
-        title: 'Login Failed',
-        description: 'Incorrect username or password',
-        variant: 'destructive'
+        title: "Login Failed",
+        description: "Incorrect username or password",
+        variant: "destructive",
       });
     }
     if (result?.url) {
-      router.replace('/dashboard');
+      router.replace("/dashboard");
     }
   };
 
@@ -78,7 +86,11 @@ export default function SignIn() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
-                  <Input type="password" {...field} className="bg-background/50" />
+                  <Input
+                    type="password"
+                    {...field}
+                    className="bg-background/50"
+                  />
                   <FormMessage />
                 </FormItem>
               )}
@@ -89,10 +101,23 @@ export default function SignIn() {
             </Button>
           </form>
         </Form>
-
+        <div className="flex items-center">
+          <hr className="flex-grow border-t border-white" />
+          <p className="mx-2 text-sm text-white">or</p>
+          <hr className="flex-grow border-t border-white" />
+        </div>
+        <Button
+          onClick={() => {
+            signIn("google", { callbackUrl: "/" });
+          }}
+          className="h-14 w-full text-sm rounded-xl  flex gap-2 bg-white border-2 border-border text-[#565656] hover:text-white hover:border-black"
+        >
+          <Image src={GoogleIcon} alt="Google Icon" />
+          <p>Sign in with Google</p>
+        </Button>
         <div className="text-center text-sm">
           <p className="text-muted-foreground">
-            Don&apos;t have an account?{' '}
+            Don&apos;t have an account?{" "}
             <Link href="/sign-up" className="text-blue-500 hover:text-blue-400">
               Sign up
             </Link>

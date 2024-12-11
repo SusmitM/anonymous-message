@@ -8,10 +8,8 @@ export const GET= async()=>{
    await dbConnect()
 
    const session=await getServerSession(authOptions);
- 
    const _user =session?.user as User;
-  
-
+   
    if(!session || !_user){
     return Response.json({success:false,message:"Not Authenticated"},{status:401})
    }

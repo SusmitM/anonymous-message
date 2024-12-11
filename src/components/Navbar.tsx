@@ -15,15 +15,15 @@ const Navbar = () => {
         <div className="h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
             <MessageSquare className="h-6 w-6 text-blue-500" />
-            <span className="font-semibold text-lg">Anonymous Messages</span>
+            <span className="font-semibold text-lg hidden md:block">Anonymous Messages</span>
           </Link>
 
           <div className="flex items-center gap-4">
             {session ? (
               <>
-                <Link href="/dashboard">
+                {/* <Link href="/dashboard">
                   <Button variant="ghost">Dashboard</Button>
-                </Link>
+                </Link> */}
                 <Button
                   onClick={() => signOut()}
                   variant="outline"

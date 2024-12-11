@@ -14,6 +14,7 @@ import { useToast } from "@/hooks/use-toast"
 import { messageSchema } from "@/schemas/messageSchema"
 import { ApiResponse } from "@/types/ApiResponse"
 import Footer from "@/components/Footer"
+import Link from "next/link"
 
 
 export default function SendMessage() {
@@ -80,7 +81,7 @@ export default function SendMessage() {
 
   return (
     <div className="min-h-screen hero-pattern flex flex-col justify-between px-4">
-      <div className="flex-1 flex items-center justify-center">
+    <div className="flex-1 flex flex-col items-center justify-center gap-8">
         <div className="glass-card w-full max-w-2xl p-8 rounded-xl space-y-8">
           <div className="text-center space-y-2">
             <div className="flex justify-center">
@@ -112,10 +113,10 @@ export default function SendMessage() {
                 )}
               />
               <div className="space-y-4">
-                <Button 
+              <Button 
                   type="button" 
-                  variant="outline" 
-                  className="w-full" 
+                  variant="secondary" 
+                  className="w-full bg-purple-600/40 hover:bg-purple-500/30 text-purple-200 border border-purple-500/50" 
                   onClick={getSuggestions}
                   disabled={fetchingSuggestions}
                 >
@@ -167,6 +168,18 @@ export default function SendMessage() {
               </Button>
             </form>
           </Form>
+        </div>
+        <div className="glass-card w-full max-w-2xl p-6 rounded-xl text-center space-y-4">
+          <h2 className="text-xl font-semibold">Want Your Own Anonymous Message Link?</h2>
+          <p className="text-sm text-muted-foreground">
+            Create your profile and start receiving anonymous messages from anyone!
+          </p>
+          <Link href="/" className="inline-block">
+            <Button variant="default" size="lg" className="gap-2">
+              <Sparkles className="h-4 w-4" />
+              Join Us Now
+            </Button>
+          </Link>
         </div>
       </div>
       <Footer />

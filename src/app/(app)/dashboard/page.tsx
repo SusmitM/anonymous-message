@@ -116,13 +116,14 @@ export default function Dashboard() {
   // Extract user details
   const { username } = session.user;
   const baseUrl = `${window.location.protocol}//${window.location.host}`;
-  const profileUrl = `${baseUrl}/u/${username}`;
+  const profileUrl = `${baseUrl}/username/${username}`;
   return (
     <div className="min-h-screen hero-pattern pt-20 px-4">
       <div className="container mx-auto max-w-6xl">
         <div className="glass-card rounded-xl p-6 mb-8">
           <div className="flex justify-between mb-4">
-          <h1 className="text-2xl font-bold mb-4">Your Anonymous Link</h1>
+          <h1 className="
+          text-sm md:text-2xl font-bold mb-4">Your Anonymous Link</h1>
           <div className="flex flex-col justify-center items-center flex-col-reverse">
       <Switch
         {...register('acceptMessages')}
@@ -130,22 +131,23 @@ export default function Dashboard() {
         onCheckedChange={handleSwitchChange}
         disabled={isSwitchLoading}
       />
-      <span className="ml-2">
+      <span className="ml-2 font-bold   text-sm md:text-lg">
         Accept Messages: {acceptMessages ? 'On' : 'Off'}
       </span>
     </div>
           </div>
   
-          <div className="flex flex-col md:flex-row gap-4 items-center bg-background/50 p-4 rounded-lg">
-            <code className="text-sm flex-1 overflow-x-auto whitespace-nowrap">
-              {profileUrl}
-            </code>
-            <Button onClick={copyToClipboard} variant="outline" className="shrink-0">
-              <ClipboardCopy className="h-4 w-4 mr-2" />
-              Copy Link
-            </Button>
-           
-          </div>
+          <div className="text-wrap flex flex-col md:flex-row gap-4 items-center bg-background/50 p-4 rounded-lg">
+      <div className="w-full overflow-x-auto whitespace-nowrap scrollbar-hide">
+        <code className="text-xs md:text-sm block">
+          {profileUrl}
+        </code>
+      </div>
+      <Button onClick={copyToClipboard} variant="outline" className="shrink-0">
+        <ClipboardCopy className="h-4 w-4 mr-2" />
+        Copy Link
+      </Button>
+    </div>
         </div>
 
         <div className="glass-card rounded-xl p-6 mb-8">

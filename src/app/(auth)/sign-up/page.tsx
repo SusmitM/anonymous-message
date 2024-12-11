@@ -14,6 +14,9 @@ import { useDebounceCallback } from "usehooks-ts";
 import axios, { AxiosError } from "axios";
 import { ApiResponse } from "@/types/ApiResponse";
 import { useEffect, useState } from "react";
+import { signIn } from "next-auth/react";
+import Image from "next/image";
+import GoogleIcon from "../../../../public/GoogleIcon.svg";
 
 export default function SignUp() {
   const [username, setUsername] = useState("");
@@ -163,6 +166,20 @@ export default function SignUp() {
           </form>
         </Form>
 
+        <div className="flex items-center">
+          <hr className="flex-grow border-t border-white" />
+          <p className="mx-2 text-sm text-white">or</p>
+          <hr className="flex-grow border-t border-white" />
+        </div>
+        <Button
+          onClick={() => {
+            signIn("google", { callbackUrl: "/" });
+          }}
+          className="h-14 w-full text-sm rounded-xl  flex gap-2 bg-white border-2 border-border text-[#565656] hover:text-white hover:border-black"
+        >
+          <Image src={GoogleIcon} alt="Google Icon" />
+          <p>Sign up with Google</p>
+        </Button>
         <div className="text-center text-sm">
           <p className="text-muted-foreground">
             Already have an account?{' '}
