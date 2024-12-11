@@ -32,7 +32,7 @@ export const POST = async (request: NextRequest) => {
     const verifyCodeExpiry = user?.verifyCodeExpiry;
 
     const isCodeValid = verifyCode === code;
-    const isCodeExpired = new Date() > new Date(verifyCodeExpiry);
+    const isCodeExpired = verifyCodeExpiry ? new Date() > new Date(verifyCodeExpiry) : true;
 
     if (isCodeValid && !isCodeExpired) {
       user.isVerified = true;
