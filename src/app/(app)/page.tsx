@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowRight, MessageSquare, Shield, UserRound } from "lucide-react";
+import { ArrowRight, Aperture, Shield, UserRound } from "lucide-react";
 import { Spotlight } from "@/components/ui/Sportlight";
 
 export default function Home() {
@@ -9,7 +9,7 @@ export default function Home() {
     
     <main className="min-h-screen hero-pattern relative overflow-hidden">
       <Spotlight 
-        className="absolute sm:left-1/6 md:left-1/4 -translate-x-1/2 -top-40 sm:-top-44 md:-top-52 lg:-top-60"
+        className="absolute sm:left-1/6 md:left-x-[20%]  -top-40 sm:-top-44 md:-top-64 lg:-top-60"
         fill="white"
       />
       <div className="container mt-32 mx-auto px-4 py-24 relative z-10">
@@ -49,11 +49,11 @@ export default function Home() {
 
           <div className="glass-card p-6 rounded-xl space-y-4">
             <div className="h-12 w-12 rounded-full bg-blue-500/10 flex items-center justify-center">
-              <MessageSquare className="h-6 w-6 text-blue-500" />
+              <Aperture className="h-6 w-6 text-blue-500" />
             </div>
-            <h3 className="text-xl font-semibold">Instant Messages</h3>
+            <h3 className="text-xl font-semibold">AI Powered Messages</h3>
             <p className="text-muted-foreground">
-              Receive messages instantly in your personal dashboard.
+            Receive messages in your personal dashboard, enhanced with AI-powered suggestions!
             </p>
           </div>
 
