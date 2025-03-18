@@ -1,5 +1,5 @@
 // Fallback dataset of message suggestions to use when HuggingFace API is unavailable
-const FALLBACK_SUGGESTIONS = [
+export const FALLBACK_SUGGESTIONS = [
     "What's been the highlight of your week so far?",
     "If you could travel anywhere right now, where would you go?",
     "What's something you're looking forward to in the coming months?",
