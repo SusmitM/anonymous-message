@@ -47,34 +47,18 @@ export async function GET(req: Request) {
   } catch (error) {
     console.error("Error during Hugging Face request:", error);
     
-    // Check if the error is a 504 Gateway Timeout (or any error that indicates the service is unavailable)
-    const is504 = error instanceof Error && 
-      (error.message.includes('504') || 
-       error.message.includes('timeout') || 
-       error.message.includes('gateway') ||
-       error.message.includes('unavailable'));
+    // Always use fallback suggestions for any error
+    console.log("Using fallback suggestions due to API error or unavailability");
     
-    // If it's a 504 or similar error, use our fallback dataset
-    if (is504 || process.env.NODE_ENV === 'development') {
-      // Get 3 random questions from our fallback dataset
-      const fallbackQuestions = getRandomItems(FALLBACK_SUGGESTIONS, 3);
-      const fallbackResponse = fallbackQuestions.join(' || ');
-      
-      return new Response(JSON.stringify({
-        success: true,
-        message: fallbackResponse,
-        source: 'fallback' // Optional: Include this to track when fallback is used
-      }), {
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
+    // Get 3 random questions from our fallback dataset
+    const fallbackQuestions = getRandomItems(FALLBACK_SUGGESTIONS, 3);
+    const fallbackResponse = fallbackQuestions.join(' || ');
     
-    // For other errors, return the standard error response
     return new Response(JSON.stringify({
-      success: false,
-      message: "Failed to fetch suggestion messages."
-    }), { 
-      status: 500,
+      success: true,
+      message: fallbackResponse,
+      source: 'fallback' // Optional: Include this to track when fallback is used
+    }), {
       headers: { 'Content-Type': 'application/json' },
     });
   }
